@@ -1,8 +1,9 @@
 // ============================================
 // Azure OpenAI - Responses API Demo
+// Multi-turn Conversation Example
 // ============================================
-// This demo shows how to use the "Responses API" with
-// Microsoft Entra ID authentication
+// This demo shows how the Responses API manages
+// conversation history on the backend using previous_response_id
 //
 // Prerequisites:
 //   1. Node.js installed (version 18 or higher)
@@ -26,7 +27,6 @@ const { OpenAI } = require("openai");
 const AZURE_OPENAI_API_BASE = process.env.AZURE_OPENAI_API_BASE;
 const AZURE_OPENAI_API_DEPLOY = process.env.AZURE_OPENAI_API_DEPLOY;
 
-// Validate environment variables
 if (!AZURE_OPENAI_API_BASE || !AZURE_OPENAI_API_DEPLOY) {
   console.error("Error: Environment variables not set properly!");
   process.exit(1);
@@ -43,44 +43,49 @@ async function main() {
     apiKey: tokenProvider,
   });
 
-  console.log("Sending request to Azure OpenAI (Responses API)...\n");
+  console.log("=".repeat(60));
+  console.log("RESPONSES API - Multi-turn Conversation Demo");
+  console.log("(History managed on backend via previous_response_id)");
+  console.log("=".repeat(60));
+
+  // Define conversation turns
+  const questions = [
+    "What is the capital of France?",
+    "What is its population?",
+    "Name 3 famous landmarks there."
+  ];
 
   try {
-    const response = await client.responses.create({
-      model: AZURE_OPENAI_API_DEPLOY,
-      input: [
-        {
-          role: "system",
-          content: "You are a helpful AI assistant. Please limit your responses to 3 sentences.",
-        },
-        {
-          role: "user",
-          content: "What is JavaScript?",
-        },
-      ],
-    });
+    let previousResponseId = null;
 
-    console.log("Response received!\n");
-    console.log("─".repeat(50));
+    for (let i = 0; i < questions.length; i++) {
+      const question = questions[i];
+      console.log(`\n[Turn ${i + 1}] User: ${question}\n`);
 
-    if (response.output_text) {
-      console.log(response.output_text);
-    }
-    else if (response.output && Array.isArray(response.output)) {
-      const assistantMessage = response.output.find(item => item.role === "assistant");
-      if (assistantMessage && assistantMessage.content && assistantMessage.content[0]) {
-        console.log(assistantMessage.content[0].text);
-      } else {
-        console.log("Unexpected response structure. Full response:");
-        console.log(JSON.stringify(response, null, 2));
+      const requestParams = {
+        model: AZURE_OPENAI_API_DEPLOY,
+        input: question,
+      };
+
+      // Add system instructions only on first turn
+      if (i === 0) {
+        requestParams.instructions = "You are a helpful assistant. Keep responses brief.";
       }
-    }
-    else {
-      console.log("Unexpected response structure. Full response:");
-      console.log(JSON.stringify(response, null, 2));
+
+      // Chain to previous response if exists
+      if (previousResponseId) {
+        requestParams.previous_response_id = previousResponseId;
+      }
+
+      const response = await client.responses.create(requestParams);
+
+      console.log("AI Agent:", response.output_text);
+      console.log("─".repeat(60));
+
+      // Store response ID for next turn
+      previousResponseId = response.id;
     }
 
-    console.log("─".repeat(50));
   } catch (error) {
     console.error("Error:", error.message);
 
