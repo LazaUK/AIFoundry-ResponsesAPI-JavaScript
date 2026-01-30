@@ -85,7 +85,7 @@ const response = await client.responses.create({
 });
 
 // Printing the structured output
-console.log(response.output[1].content[0].text);
+console.log(response.output_text);
 ```
 
 ### 3.2 Running the Demo
@@ -103,9 +103,9 @@ Sending request to Azure OpenAI (Responses API)...
 Response received!
 
 ──────────────────────────────────────────────────
-JavaScript is a high-level, interpreted programming language primarily 
-used to create interactive and dynamic content on websites. It runs in 
-web browsers and can also be used on servers with Node.js.
+JavaScript is a programming language commonly used to create interactive effects within web browsers.
+It allows developers to build dynamic content, control multimedia, animate images, and handle user inputs on websites.
+JavaScript runs on the client side, meaning it executes directly in the user's web browser.
 ──────────────────────────────────────────────────
 ```
 
