@@ -27,10 +27,10 @@ az login
 ### 1.3 Environment Variables
 Configure the following environment variables. Note the use of the new `/openai/v1/` base path suffix to support versionless routing:
 
-| Environment Variable   | Description                                                                 |
-| ---------------------- | --------------------------------------------------------------------------- |
-| MY_AOAI_API_BASE       | The endpoint URL (e.g., https://AOAI_RESOURCE.openai.azure.com/openai/v1/). |
-| MY_AOAI_API_DEPLOYMENT | The name of your model deployment.                                          |
+| Environment Variable    | Description                                                                 |
+| ----------------------- | --------------------------------------------------------------------------- |
+| AZURE_OPENAI_API_BASE   | The endpoint URL (e.g., https://AOAI_RESOURCE.openai.azure.com/openai/v1/). |
+| AZURE_OPENAI_API_DEPLOY | The name of your model deployment.                                          |
 
 ### 1.4 Installation
 Install required JS libraries:
@@ -58,7 +58,7 @@ const tokenProvider = getBearerTokenProvider(
 
 // Simplified initialization
 const client = new OpenAI({
-    baseURL: process.env.MY_AOAI_API_BASE,
+    baseURL: process.env.AZURE_OPENAI_API_BASE,
     apiKey: tokenProvider,
 });
 ```
@@ -71,7 +71,7 @@ The following snippet shows how to send a system instruction and a user query to
 
 ``` JavaScript
 const response = await client.responses.create({
-    model: process.env.MY_AOAI_API_DEPLOYMENT,
+    model: process.env.AZURE_OPENAI_API_DEPLOY,
     input: [
         {
             role: "system",
@@ -128,7 +128,7 @@ const messages = [
 ];
 
 const result = await client.chat.completions.create({
-    model: process.env.MY_AOAI_API_DEPLOYMENT,
+    model: process.env.AZURE_OPENAI_API_DEPLOY,
     messages: messages,
     max_tokens: 150,
 });
