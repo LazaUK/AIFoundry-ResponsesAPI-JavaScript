@@ -7,7 +7,7 @@ This repo demonstrates the use of **Azure OpenAI** GPT models with **Responses A
 ## 📑 Table of Contents:
 - [Part 1: Configuring Solution Environment](#part-1-configuring-solution-environment)
 - [Part 2: Client Initialisation](#part-2-client-initialisation)
-- [Part 3: Test of Responses API]()
+- [Part 3: Test of Responses API](#part-3-test-of-responses-api)
 - [Part 4: Test of Chat Completions API]()
 
 ## Part 1: Configuring Solution Environment
