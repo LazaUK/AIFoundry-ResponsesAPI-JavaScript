@@ -9,6 +9,7 @@ This repo demonstrates the use of **Azure OpenAI** GPT models with **Responses A
 - [Part 2: Client Initialisation](#part-2-client-initialisation)
 - [Part 3: Test of Responses API](#part-3-test-of-responses-api)
 - [Part 4: Test of Chat Completions API](#part-4-test-of-chat-completions-api)
+- [Part 5: Test of Conversations API]()
 
 ## Part 1: Configuring Solution Environment
 To run the provided JavaScript demos, you'll need to set up your Azure AI Foundry resource and install required packages.
@@ -152,8 +153,13 @@ Sending request to Azure OpenAI (Chat Completions API)...
 Response received!
 
 ──────────────────────────────────────────────────
-JavaScript is a high-level, interpreted programming language primarily 
-used to create interactive and dynamic content on websites. It runs in 
-web browsers and can also be used on servers with Node.js.
+JavaScript is a high-level, interpreted programming language commonly used to create interactive effects within web browsers.
+It enables dynamic content such as animations, form validation, and handling user events on websites.
+Additionally, JavaScript can be used on the server side with environments like Node.js.
 ──────────────────────────────────────────────────
 ```
+
+## Part 5: Test of Conversations API
+
+> [WARNING]
+> At the time of writing in January 2026, Conversations API is still not supported in Azure OpenAI. If you are interested in this capability, please upvote [here](https://feedback.azure.com/d365community/idea/a151a81e-00a9-f011-aa44-7c1e52926d78).
