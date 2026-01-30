@@ -162,4 +162,4 @@ Additionally, JavaScript can be used on the server side with environments like N
 ## Part 5: Test of Conversations API
 
 > [!WARNING]
-> At the time of writing in January 2026, Conversations API is still not supported in Azure OpenAI. If you are interested in this capability, please upvote [here](https://feedback.azure.com/d365community/idea/a151a81e-00a9-f011-aa44-7c1e52926d78).
+> At the time of writing in January 2026, Conversations API was still not supported in Azure OpenAI. If you are interested in this capability, please upvote it [here](https://feedback.azure.com/d365community/idea/a151a81e-00a9-f011-aa44-7c1e52926d78).
