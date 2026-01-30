@@ -8,7 +8,7 @@ This repo demonstrates the use of **Azure OpenAI** GPT models with **Responses A
 - [Part 1: Configuring Solution Environment](#part-1-configuring-solution-environment)
 - [Part 2: Client Initialisation](#part-2-client-initialisation)
 - [Part 3: Test of Responses API](#part-3-test-of-responses-api)
-- [Part 4: Test of Chat Completions API]()
+- [Part 4: Test of Chat Completions API](#part-4-test-of-chat-completions-api)
 
 ## Part 1: Configuring Solution Environment
 To run the provided JavaScript demos, you'll need to set up your Azure AI Foundry resource and install required packages.
