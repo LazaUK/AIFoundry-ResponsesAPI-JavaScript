@@ -68,25 +68,40 @@ const client = new OpenAI({
 The **Responses API** provides a flexible way to interact with advanced models. The `demo-responses.js` file uses the `client.responses.create` method, designed for high-performance interactions where conversation logic managed by the backend.
 
 ### 3.1 Example Implementation
-The following snippet shows how to send a system instruction and a user query to the model.
+The following snippet shows a multi-turn conversation where the backend manages history via `previous_response_id`.
 
 ``` JavaScript
-const response = await client.responses.create({
-    model: process.env.AZURE_OPENAI_API_DEPLOY,
-    input: [
-        {
-            role: "system",
-            content: "You are a helpful AI assistant. Please limit your responses to 3 sentences.",
-        },
-        {
-            role: "user",
-            content: "What is JavaScript?",
-        },
-    ],
-});
+// Define conversation turns
+const questions = [
+  "What is the capital of France?",
+  "What is its population?",
+  "Name 3 famous landmarks there."
+];
 
-// Printing the structured output
-console.log(response.output_text);
+let previousResponseId = null;
+
+for (let i = 0; i < questions.length; i++) {
+  const requestParams = {
+    model: process.env.AZURE_OPENAI_API_DEPLOY,
+    input: questions[i],
+  };
+
+  // Add system instructions only on first turn
+  if (i === 0) {
+    requestParams.instructions = "You are a helpful assistant. Keep responses brief.";
+  }
+
+  // Chain to previous response if exists
+  if (previousResponseId) {
+    requestParams.previous_response_id = previousResponseId;
+  }
+
+  const response = await client.responses.create(requestParams);
+  console.log("AI Agent:", response.output_text);
+
+  // Store response ID for next turn
+  previousResponseId = response.id;
+}
 ```
 
 ### 3.2 Running the Demo
@@ -99,15 +114,28 @@ node demo-responses.js
 If setup successfully, you should expect to get a response looking like this:
 
 ``` JSON
-Sending request to Azure OpenAI (Responses API)...
+============================================================
+RESPONSES API - Multi-turn Conversation Demo
+(History managed on backend via previous_response_id)
+============================================================
 
-Response received!
+[Turn 1] User: What is the capital of France?
 
-──────────────────────────────────────────────────
-JavaScript is a programming language commonly used to create interactive effects within web browsers.
-It allows developers to build dynamic content, control multimedia, animate images, and handle user inputs on websites.
-JavaScript runs on the client side, meaning it executes directly in the user's web browser.
-──────────────────────────────────────────────────
+AI Agent: The capital of France is Paris.
+────────────────────────────────────────────────────────────
+
+[Turn 2] User: What is its population?
+
+AI Agent: As of the most recent data, the population of Paris is approximately 2.1 million people within the city proper.
+────────────────────────────────────────────────────────────
+
+[Turn 3] User: Name 3 famous landmarks there.
+
+AI Agent: Three famous landmarks in Paris are:
+1. Eiffel Tower
+2. Louvre Museum
+3. Notre-Dame Cathedral
+────────────────────────────────────────────────────────────
 ```
 
 ## Part 4: Test of Chat Completions API
