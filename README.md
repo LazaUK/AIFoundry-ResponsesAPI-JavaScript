@@ -28,10 +28,10 @@ az login
 ### 1.3 Environment Variables
 Configure the following environment variables. Note the use of the new `/openai/v1/` base path suffix to support versionless routing:
 
-| Environment Variable    | Description                                                                 |
-| ----------------------- | --------------------------------------------------------------------------- |
-| AZURE_OPENAI_API_BASE   | The endpoint URL (e.g., https://AOAI_RESOURCE.openai.azure.com/openai/v1/). |
-| AZURE_OPENAI_API_DEPLOY | The name of your model deployment.                                          |
+| Environment Variable    | Description                                                                   |
+| ----------------------- | ----------------------------------------------------------------------------- |
+| AZURE_OPENAI_API_BASE   | The endpoint URL (e.g., https://<AOAI_RESOURCE>.openai.azure.com/openai/v1/). |
+| AZURE_OPENAI_API_DEPLOY | The name of your model deployment.                                            |
 
 ### 1.4 Installation
 Install required JS libraries:
