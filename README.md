@@ -142,28 +142,38 @@ AI Agent: Three famous landmarks in Paris are:
 The **Chat Completions API** is a legacy conversation-based approach. The `demo-chat-completions.js` file uses the `client.chat.completions.create` method, and maintains conversation context across multiple exchanges.
 
 ### 4.1 Example Implementation
-The following snippet shows how to send messages using the Chat Completions format.
+The following snippet shows a multi-turn conversation where history is managed manually via the `messages` array.
 
 ``` JavaScript
-const messages = [
-    {
-        role: "system",
-        content: "You are a helpful AI assistant. Please limit your responses to 3 sentences.",
-    },
-    {
-        role: "user",
-        content: "What is JavaScript?",
-    },
+// Define conversation turns
+const questions = [
+  "What is the capital of France?",
+  "What is its population?",
+  "Name 3 famous landmarks there."
 ];
 
-const result = await client.chat.completions.create({
+// Initialize messages with system prompt
+const messages = [
+  { role: "system", content: "You are a helpful assistant. Keep responses brief." }
+];
+
+for (let i = 0; i < questions.length; i++) {
+  // Add user message to history
+  messages.push({ role: "user", content: questions[i] });
+
+  const response = await client.chat.completions.create({
     model: process.env.AZURE_OPENAI_API_DEPLOY,
     messages: messages,
     max_tokens: 150,
-});
+  });
 
-// Printing the response
-console.log(result.choices[0].message.content);
+  const answer = response.choices[0].message.content;
+
+  // Add assistant response to history for next turn
+  messages.push({ role: "assistant", content: answer });
+
+  console.log("AI Agent:", answer);
+}
 ```
 
 ### 4.2 Running the Demo
@@ -176,15 +186,28 @@ node demo-chat-completions.js
 If setup successfully, you should expect to get a response looking like this:
 
 ``` JSON
-Sending request to Azure OpenAI (Chat Completions API)...
+============================================================
+CHAT COMPLETIONS API - Multi-turn Conversation Demo
+(History managed manually via messages array)
+============================================================
 
-Response received!
+[Turn 1] User: What is the capital of France?
 
-──────────────────────────────────────────────────
-JavaScript is a high-level, interpreted programming language commonly used to create interactive effects within web browsers.
-It enables dynamic content such as animations, form validation, and handling user events on websites.
-Additionally, JavaScript can be used on the server side with environments like Node.js.
-──────────────────────────────────────────────────
+AI Agent: The capital of France is Paris.
+────────────────────────────────────────────────────────────
+
+[Turn 2] User: What is its population?
+
+AI Agent: As of 2024, the population of Paris is approximately 2.1 million people.
+────────────────────────────────────────────────────────────
+
+[Turn 3] User: Name 3 famous landmarks there.
+
+AI Agent: Three famous landmarks in Paris are:
+1. Eiffel Tower
+2. Louvre Museum
+3. Notre-Dame Cathedral
+────────────────────────────────────────────────────────────
 ```
 
 ## Part 5: Test of Conversations API
