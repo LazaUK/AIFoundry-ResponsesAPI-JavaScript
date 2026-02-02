@@ -2,7 +2,7 @@
 This repo demonstrates the use of **Azure OpenAI** GPT models with **Responses API** and **Chat Completions API** in JavaScript.
 
 > [!NOTE]
-> From Augist 2025, the new naming convention allows you to use the latest API version implicitly. Specifics of the Azure OpenAI models API lifecycle can be found on this [AI Foundry documentation page](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/api-version-lifecycle).
+> From `August 2025`, the new naming convention allows you to use the latest API version implicitly. Specifics of the Azure OpenAI models API lifecycle can be found on this [AI Foundry documentation page](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/api-version-lifecycle).
 
 ## 📑 Table of Contents:
 - [Part 1: Configuring Solution Environment](#part-1-configuring-solution-environment)
